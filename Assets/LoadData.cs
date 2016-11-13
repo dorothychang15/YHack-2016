@@ -6,13 +6,15 @@ using System;
 
 public class LoadData : MonoBehaviour {
 
+	public Dictionary<string, Dictionary<string, long>> data;
+
     // Use this for initialization
-    void Start()
+    public void Start()
     {
         string path = @"data\API_SP.POP.TOTL_DS2_en_csv_v2.csv";
         string csv = File.ReadAllText(path);
 
-        Dictionary<string, Dictionary<string, long>> data = new Dictionary<string, Dictionary<string, long>>();
+        data = new Dictionary<string, Dictionary<string, long>>();
         string[] lines = csv.Split(new char[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
 
         string[] yearsLine = lines[4].Split(',');
