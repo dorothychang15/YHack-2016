@@ -9,10 +9,10 @@ public class LoadData : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
-        string path = @"data\API_SP.POP.TOTL_DS2_en_csv_v2.csv"; // population
+        string path = @"data\API_SP.POP.TOTL_DS2_en_csv_v2.csv";
         string csv = File.ReadAllText(path);
 
-        Dictionary<string, Dictionary<string, string>> data = new Dictionary<string, Dictionary<string, string>>();
+        Dictionary<string, Dictionary<string, long>> data = new Dictionary<string, Dictionary<string, long>>();
         string[] lines = csv.Split(new char[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
 
         string[] yearsLine = lines[4].Split(',');
@@ -28,15 +28,17 @@ public class LoadData : MonoBehaviour {
         {
             string[] values = lines[i].Trim().Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
             string country = values[0];
-            data[country] = new Dictionary<string, string>();
+            data[country] = new Dictionary<string, long>();
 
             // statistic-values start on the fifth column
             for (int j = 0; j < values.Length - 5; j++)
             {
                 string year = years[j];
-                string value = values[j + 4];
-                data[country][year] = value;
+                long value;
 
+                string input = values[j + 4].Substring(1, values[j + 4].Length - 2);
+                if (Int64.TryParse(input, out value))
+                    data[country][year] = value;
             }
         }
     }
