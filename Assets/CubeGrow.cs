@@ -7,6 +7,8 @@ public class CubeGrow : MonoBehaviour {
 	public GameObject china;
 	public Dictionary<string, int> data;
 	public Dictionary<string, GameObject> map;
+	int time;
+	int count;
 
 	// Use this for initialization
 	void Start () {
@@ -18,14 +20,15 @@ public class CubeGrow : MonoBehaviour {
 		map = new Dictionary<string, GameObject> ();
 		map.Add ("us", us);
 		map.Add ("china", china);
-		draw ();
+		time = 0;
+		count = 0;
 	}
 
-	public void draw () {
+	public void draw (int count) {
 		foreach(KeyValuePair<string, int> entry in data)
 		{
 			GameObject obj = map [entry.Key];
-			for (int i = 0; i < entry.Value; i++) {
+			if (count < entry.Value) {
 				grow (obj);
 			}
 		}
@@ -37,5 +40,12 @@ public class CubeGrow : MonoBehaviour {
 		obj.transform.position = new Vector3 (position.x, 0, position.z);
 	}
 
+	void Update () {
+		time++;
+		if (time % 10 == 0) {
+			draw (count);
+			count++;
+		}
+	}
 
 }
