@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-public class CubeGrow : MonoBehaviour {
+public class Bar : MonoBehaviour {
 
-	public GameObject country1;
-	public GameObject country2;
+	public GameObject us;
+	public GameObject china;
+	public GameObject russia;
 	public Dictionary<string, Dictionary<string, long>> data;
 	public Dictionary<string, GameObject> map;
 	int time;
@@ -15,15 +16,19 @@ public class CubeGrow : MonoBehaviour {
 		LoadData getData = GetComponent<LoadData>();
 		getData.Start();
 		data = getData.data;
+		map = new Dictionary<string, GameObject> ();
+		map.Add ("United States", us);
+		map.Add ("China", china);
+		map.Add ("Russian Federation", russia);
 		time = 0;
 		count = 0;
 	}
 
-	public void draw (int count) {
-		foreach(KeyValuePair<string, Dictionary<string, long>> entry in data)
+	public void draw (float count) {
+		foreach(KeyValuePair<string, GameObject> entry in map)
 		{
-			GameObject obj = map [entry.Key];
-			if (count < entry.Value["2000"]) {
+			GameObject obj = entry.Value;
+			if (count < data[entry.Key]["\"2015\""]) {
 				grow (obj);
 			}
 		}

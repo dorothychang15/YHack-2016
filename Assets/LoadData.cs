@@ -11,27 +11,26 @@ public class LoadData : MonoBehaviour {
     // Use this for initialization
     public void Start()
     {
-        string path = @"data\API_SP.POP.TOTL_DS2_en_csv_v2.csv";
+        string path = @"Assets\Data\API_SP.POP.TOTL_DS2_en_csv_v2.csv";
         string csv = File.ReadAllText(path);
 
         data = new Dictionary<string, Dictionary<string, long>>();
         string[] lines = csv.Split(new char[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
 
-        string[] yearsLine = lines[4].Split(',');
+		string[] yearsLine = lines[4].Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
         string[] years = new string[yearsLine.Length - 4];
 
         for (int i = 0; i < years.Length; i++)
         {
-            years[i] = yearsLine[i + 4];
+			years [i] = yearsLine [i + 4];
         }
 
         // country-values start on the fifth row
         for (int i = 5; i < lines.Length; i++)
         {
             string[] values = lines[i].Trim().Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-            string country = values[0];
+			string country = values [0].Substring (1, values [0].Length - 2);
             data[country] = new Dictionary<string, long>();
-
             // statistic-values start on the fifth column
             for (int j = 0; j < values.Length - 5; j++)
             {
