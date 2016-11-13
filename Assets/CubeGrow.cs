@@ -15,8 +15,8 @@ public class CubeGrow : MonoBehaviour {
 		// read in input data
 		// determine values for each
 		data = new Dictionary<string, int>();
-		data.Add ("us", 5);
-		data.Add ("china", 10);
+		data.Add ("us", 10);
+		data.Add ("china", 20);
 		map = new Dictionary<string, GameObject> ();
 		map.Add ("us", us);
 		map.Add ("china", china);
@@ -35,9 +35,8 @@ public class CubeGrow : MonoBehaviour {
 	}
 
 	public void grow (GameObject obj) {
-		obj.transform.localScale += new Vector3 (0, 0.1f, 0);
-		Vector3 position = obj.transform.position;
-		obj.transform.position = new Vector3 (position.x, 0, position.z);
+		obj.transform.localPosition += new Vector3(0, 0.0125f, 0);
+		obj.transform.localScale += new Vector3 (0, 0.025f, 0);
 	}
 
 	void Update () {
@@ -45,6 +44,13 @@ public class CubeGrow : MonoBehaviour {
 		if (time % 10 == 0) {
 			draw (count);
 			count++;
+		}
+		if (count == 20) {
+			count = 0;
+			us.transform.localScale = new Vector3 (1, 1, 1);
+			us.transform.localPosition = new Vector3 (1, -0.21f, -0.41f);
+			china.transform.localScale = new Vector3 (1, 1, 1);
+			china.transform.localPosition = new Vector3 (2, 0, -0.87f);
 		}
 	}
 
